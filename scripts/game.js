@@ -8,44 +8,44 @@ function Ship(startPos, size, direction, id) {
     this.isSunk = false;
     this.id = id;
 
-    this.create = function() {
-        for (let i = 0; i < this.size; i++) {
-            if (direction === 0) {
-                gameboard.grid[this.startPos + i].shipId = this.id;
-                drawShipCell(this.startPos + i, this.id);
-            } else {
-                gameboard.grid[this.startPos + i * 10].shipId = this.id;
-                drawShipCell(this.startPos + i * 10, this.id);
-            }
+    this.create();  
+}
+
+Ship.prototype.create = function() {
+    for (let i = 0; i < this.size; i++) {
+        if (this.direction === 0) {
+            gameboard.grid[this.startPos + i].shipId = this.id;
+            drawShipCell(this.startPos + i, this.id);
+        } else {
+            gameboard.grid[this.startPos + i * 10].shipId = this.id;
+            drawShipCell(this.startPos + i * 10, this.id);
         }
     }
+}
 
-    this.hit = function() {
-        this.hitcount++;
-        if (this.hitcount === size) this.sink();
-    }
+Ship.prototype.hit = function() {
+    this.hitcount++;
+    if (this.hitcount === this.size) this.sink();
+}
 
-    this.sink = function() {
-        this.isSunk = true;
-        gameboard.areAllShipsSunk();
-    }
-
-    this.create();
+Ship.prototype.sink = function() {
+    this.isSunk = true;
+    gameboard.areAllShipsSunk();
 }
 
 function GridCell(index) {
     this.index = index;
     this.shipId = null;
     this.isHit = false;
+}
 
-    this.hit = function() {
-        if (this.isHit) return;
+GridCell.prototype.hit = function() {
+    if (this.isHit) return;
 
-        this.isHit = true;
+    this.isHit = true;
 
-        if(this.shipId) {
-            ships.find(ship => ship.id === this.shipId.toString()).hit();
-        }
+    if(this.shipId) {
+        ships.find(ship => ship.id === this.shipId.toString()).hit();
     }
 }
 
