@@ -4,5 +4,27 @@
 }
 
 body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
     background-color: rgb(66, 66, 66);
+    height: 100vh;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    gap: 6px;
+    padding: 6px;
+
+    width: min(90vh, 90vw);
+    min-height: 100px;
+}
+
+.grid-cell {
+    aspect-ratio: 1;
+    background-color: rgb(110, 110, 110);
+    box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 1);
 }
