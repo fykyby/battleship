@@ -39,6 +39,11 @@ function createShip(startX, startY, size, direction) {
         pos.classList.add('ship');
     }
 
+    function hit() {
+        hitcount++;
+        console.log(hitcount);
+    }
+
     // function checkCollisions(x, y) {
     //     const index = parseInt(y.toString() + x.toString());
     //     if (grid[index].shipId !== undefined) {
@@ -87,8 +92,21 @@ gridElement.addEventListener('click', e => {
 
     const x = (e.target.getAttribute('data-x'));
     const y = (e.target.getAttribute('data-y'));
-    grid[parseInt(x + y)].hit = true;
-    console.log(grid[parseInt(x + y)]);
+    let target = grid[parseInt(x + y)];
+
+    if (target.hit) return;
+    target.hit = true;
+    console.log(target);
+
+
+    if (target.shipId === undefined) {
+        e.target.classList.add('hit-blank');
+    } else {
+        // ships[target.shipId].hit();
+        console.log(ships);
+        console.log(ships[target.shipId]);
+        e.target.classList.add('hit-ship');
+    }   
 })
 
 // gridElement.addEventListener('click', e => {
