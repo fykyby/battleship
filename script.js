@@ -33,14 +33,11 @@ function createShip(startX, startY, size, direction) {
     draw();
 }
 
-
 function createGrid(gridSize) {
     let grid = [];
 
-    for (let i = 0; i < gridSize; i++) 
-    {
-        for (let j = 0; j < gridSize; j++)
-        {
+    for (let i = 0; i < gridSize; i++) {
+        for (let j = 0; j < gridSize; j++) {
             grid.push(new GridCell(j, i));
         }
     }
