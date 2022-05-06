@@ -27,6 +27,7 @@ body {
     aspect-ratio: 1;
     background-color: rgb(110, 110, 110);
     box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 1);
+    cursor: pointer;
 }
 
 .grid-cell.ship {

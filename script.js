@@ -4,33 +4,52 @@ class GridCell {
     constructor(x, y) {
         this.x = x;
         this.y = y;
+        this.shipId = undefined;
+        this.hit = false;
     }
 }
 
 function createShip(startX, startY, size, direction) {
     let hitcount = 0;
 
-    function draw() {
-        const startPos = gridElement.querySelector(`[data-x='${startX}'][data-y='${startY}']`);
-
-        if (direction === 'horizontal') {
-            if (startX > gridSize - size) startX = gridSize - size;
-
-            for (let i = 0; i < size; i++) {
-                const pos = document.querySelector(`[data-x='${i + startX}'][data-y='${startY}']`);
-                pos.classList.add('ship');
+    function handleCreate() {
+        let x, y;
+        for (let i = 0; i < size; i++) {
+            if (direction === 'horizontal') {
+                if (startX > gridSize - size) startX = gridSize - size;
+                x = startX + i;
+                y = startY;
+            } else {
+                if (startY > gridSize - size) startY = gridSize - size;
+                x = startX;
+                y = startY + i;
             }
-        } else if (direction === 'vertical') {
-            if (startY > gridSize - size) startY = gridSize - size;
-
-            for (let i = 0; i < size; i++) {
-                const pos = document.querySelector(`[data-x='${startX}'][data-y='${i + startY}']`);
-                pos.classList.add('ship');
-            }
+            create(x, y);
+            draw(x, y);
         }
     }
 
-    draw();
+    function create(x, y) {
+        const index = parseInt(y.toString() + x.toString());
+        grid[index].shipId = ships.length;
+    }
+
+    function draw(x, y) {
+        const pos = document.querySelector(`[data-x='${x}'][data-y='${y}']`);
+        pos.classList.add('ship');
+    }
+
+    // function checkCollisions(x, y) {
+    //     const index = parseInt(y.toString() + x.toString());
+    //     if (grid[index].shipId !== undefined) {
+    //         console.log('collision');
+    //     } else {
+    //         console.log('no collision');
+    //     }
+    // }
+
+    handleCreate()
+    ships.push(this);
 }
 
 function createGrid(gridSize) {
@@ -49,8 +68,8 @@ function drawGrid(grid, parentElement) {
     grid.forEach(cell => {
         const cellElement = document.createElement('div');
         cellElement.classList.add('grid-cell');
-        cellElement.setAttribute('data-x', cell.x);
         cellElement.setAttribute('data-y', cell.y);
+        cellElement.setAttribute('data-x', cell.x);
         parentElement.appendChild(cellElement);
     });
 }
@@ -60,4 +79,16 @@ const grid = createGrid(gridSize);
 drawGrid(grid, gridElement);
 
 let ships = [];
-ships.push(createShip(2, 2, 3, 'vertical'));
+createShip(1, 5, 3, 'horizontal');
+createShip(7, 2, 3, 'vertical');
+
+gridElement.addEventListener('click', e => {
+    if (!e.target.classList.contains('grid-cell')) return;
+})
+
+// gridElement.addEventListener('click', e => {
+//     if (!e.target.classList.contains('grid-cell')) return;
+//     const x = parseInt(e.target.getAttribute('data-x'));
+//     const y = parseInt(e.target.getAttribute('data-y'));
+//     createShip(x, y, 3, 'horizontal');
+// });
