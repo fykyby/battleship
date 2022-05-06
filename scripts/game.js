@@ -10,8 +10,13 @@ function Ship(startPos, size, direction, id) {
 
     this.create = function() {
         for (let i = 0; i < this.size; i++) {
-            gameboard.grid[this.startPos + i].shipId = this.id;
-            drawShipCell(this.startPos + i, this.id);
+            if (direction === 0) {
+                gameboard.grid[this.startPos + i].shipId = this.id;
+                drawShipCell(this.startPos + i, this.id);
+            } else {
+                gameboard.grid[this.startPos + i * 10].shipId = this.id;
+                drawShipCell(this.startPos + i * 10, this.id);
+            }
         }
     }
 
@@ -72,4 +77,4 @@ function Gameboard(size) {
 export const gameboard = new Gameboard(10);
 let ships = [];
 ships.push(new Ship(64, 4, 0, Date.now().toString()));
-ships.push(new Ship(21, 4, 0, (Date.now() + 10).toString()));
+ships.push(new Ship(21, 4, 1, (Date.now() + 10).toString()));
