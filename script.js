@@ -30,7 +30,7 @@ function createShip(startX, startY, size, direction) {
     }
 
     function create(x, y) {
-        const index = parseInt(y.toString() + x.toString());
+        const index = parseInt(x.toString() + y.toString());
         grid[index].shipId = ships.length;
     }
 
@@ -84,6 +84,11 @@ createShip(7, 2, 3, 'vertical');
 
 gridElement.addEventListener('click', e => {
     if (!e.target.classList.contains('grid-cell')) return;
+
+    const x = (e.target.getAttribute('data-x'));
+    const y = (e.target.getAttribute('data-y'));
+    grid[parseInt(x + y)].hit = true;
+    console.log(grid[parseInt(x + y)]);
 })
 
 // gridElement.addEventListener('click', e => {
