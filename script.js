@@ -6,10 +6,20 @@ function createGrid(gridSize) {
     {
         for (let j = 0; j < gridSize; j++)
         {
-            grid.push(new GridCell(i, j));
+            grid.push(new GridCell(j, i));
         }
     }
     return grid;
+}
+
+function drawGrid(grid, parentElement) {
+    grid.forEach(col => {
+        const cellElement = document.createElement('div');
+        cellElement.classList.add('grid-cell');
+        cellElement.setAttribute('data-x', col.x);
+        cellElement.setAttribute('data-y', col.y);
+        parentElement.appendChild(cellElement);
+    });
 }
 
 class GridCell {
@@ -20,9 +30,4 @@ class GridCell {
 }
 
 const grid = createGrid(10);
-
-grid.forEach(col => {
-    const cellElement = document.createElement('div');
-    cellElement.classList.add('grid-cell');
-    gridElement.appendChild(cellElement);
-});
+drawGrid(grid, gridElement);
