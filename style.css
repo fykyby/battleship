@@ -8,7 +8,7 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    
+
     background-color: rgb(66, 66, 66);
     height: 100vh;
 }
@@ -27,4 +27,8 @@ body {
     aspect-ratio: 1;
     background-color: rgb(110, 110, 110);
     box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 1);
+}
+
+.grid-cell.ship {
+    background-color: rgb(33, 33, 33);
 }
