@@ -26,15 +26,22 @@ Ship.prototype.create = function() {
 
 Ship.prototype.checkForWalls = function() {
     if (this.direction === 'horizontal') {
-        while (this.startPos.toString()[0] !== (this.startPos + this.size).toString()[0]) {
-            if ((this.startPos + this.size).toString()[1] === '0') break;
-            this.startPos = this.startPos - 1;
+        let startIndex = this.startPos;
+        let endIndex = this.startPos + this.size;
+        if (startIndex < 10) startIndex = '0' + startIndex.toString();
+        if (endIndex < 10) endIndex = '0' + endIndex.toString();
+
+        while (startIndex.toString()[0] !== endIndex.toString()[0]) {
+            if (endIndex.toString()[1] === '0' && endIndex < 101) break;
+            this.startPos = startIndex - 1;
+            startIndex = this.startPos;
+            endIndex = this.startPos + this.size;
         }
     } else if (this.direction === 'vertical') {
         while (this.startPos + (this.size - 1) * 10 > 99) {
-            let n = this.startPos.toString()[0];
-            n = parseInt(n) - 1;
-            this.startPos = parseInt(n.toString() + this.startPos.toString()[1]);
+            let temp = this.startPos.toString()[0];
+            temp = parseInt(temp) - 1;
+            this.startPos = parseInt(temp.toString() + this.startPos.toString()[1]);
         }
     }   
 }
@@ -97,7 +104,12 @@ export const game = (() => {
     gameboards.push(new Gameboard(gameboards.length));
     gameboards.push(new Gameboard(gameboards.length));  
     
-    gameboards[0].ships.push(new Ship(gameboards[0], 54, 4, 'vertical', gameboards[0].ships.length.toString()));
+    const test1 = (Math.round(Math.random() * 100));
+    const test2 = (Math.round(Math.random() * 100));
+    console.log(test1);
+    console.log(test2);
+    gameboards[0].ships.push(new Ship(gameboards[0], test1, 4, 'vertical', gameboards[0].ships.length.toString()));
+    gameboards[0].ships.push(new Ship(gameboards[0], test2, 4, 'horizontal', gameboards[0].ships.length.toString()));
 
     return {
         isGameOver,
