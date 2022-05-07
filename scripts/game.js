@@ -70,15 +70,25 @@ Gameboard.prototype.hit = function(index) {
 Gameboard.prototype.areAllShipsSunk = function() {
     let sunk = this.ships.every(ship => ship.isSunk);
     if(sunk) {
+        game.isGameOver = true;
         console.log(`Board's ${this.id} ships sunk`);
     }
 }
 
-export let gameboards = [];
-gameboards.push(new Gameboard(gameboards.length));
-gameboards.push(new Gameboard(gameboards.length));
+export const game = (() => {
+    let isGameOver = false;
+    let gameboards = [];
+    gameboards.push(new Gameboard(gameboards.length));
+    gameboards.push(new Gameboard(gameboards.length));  
+    
+    gameboards[0].ships.push(new Ship(gameboards[0], 64, 4, 'horizontal', gameboards[0].ships.length.toString()));
+    gameboards[0].ships.push(new Ship(gameboards[0], 21, 4, 'vertical', gameboards[0].ships.length.toString()));
+    gameboards[1].ships.push(new Ship(gameboards[1], 6, 3, 'vertical', gameboards[1].ships.length.toString()));
+    gameboards[1].ships.push(new Ship(gameboards[1], 72, 2, 'horizontal', gameboards[1].ships.length.toString()));
 
-gameboards[0].ships.push(new Ship(gameboards[0], 64, 4, 'horizontal', gameboards[0].ships.length.toString()));
-gameboards[0].ships.push(new Ship(gameboards[0], 21, 4, 'vertical', gameboards[0].ships.length.toString()));
-gameboards[1].ships.push(new Ship(gameboards[1], 6, 3, 'vertical', gameboards[1].ships.length.toString()));
-gameboards[1].ships.push(new Ship(gameboards[1], 72, 2, 'horizontal', gameboards[1].ships.length.toString()));
+    return {
+        isGameOver,
+        gameboards
+    }
+})();
+
