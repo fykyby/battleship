@@ -1,6 +1,7 @@
 import { drawGameboard, drawShipCell } from "./display.js";
 
-function Ship(startPos, size, direction, id) {
+function Ship(gameboard, startPos, size, direction, id) {
+    this.gameboard = gameboard;
     this.startPos = startPos;
     this.size = size;
     this.direction = direction;
@@ -14,11 +15,11 @@ function Ship(startPos, size, direction, id) {
 Ship.prototype.create = function() {
     for (let i = 0; i < this.size; i++) {
         if (this.direction === 0) {
-            gameboard.grid[this.startPos + i].shipId = this.id;
-            drawShipCell(this.startPos + i, this.id);
+            this.gameboard.grid[this.startPos + i].shipId = this.id;
+            drawShipCell(this.gameboard.id, this.startPos + i, this.id);
         } else {
-            gameboard.grid[this.startPos + i * 10].shipId = this.id;
-            drawShipCell(this.startPos + i * 10, this.id);
+            this.gameboard.grid[this.startPos + i * 10].shipId = this.id;
+            drawShipCell(this.gameboard.id, this.startPos + i * 10, this.id);
         }
     }
 }
@@ -30,7 +31,7 @@ Ship.prototype.hit = function() {
 
 Ship.prototype.sink = function() {
     this.isSunk = true;
-    gameboard.areAllShipsSunk();
+    this.gameboard.areAllShipsSunk();
 }
 
 function GridCell(index) {
@@ -39,7 +40,7 @@ function GridCell(index) {
     this.isHit = false;
 }
 
-GridCell.prototype.hit = function() {
+GridCell.prototype.hit = function(ships) {
     if (this.isHit) return;
     this.isHit = true;
     if(this.shipId) {
@@ -47,9 +48,11 @@ GridCell.prototype.hit = function() {
     }
 }
 
-function Gameboard(size) {
-    this.size = size;
+function Gameboard(id) {
+    this.size = 10; 
+    this.id = id;
     this.grid = [];
+    this.ships = [];
     this.create();
 }
 
@@ -57,21 +60,21 @@ Gameboard.prototype.create = function() {
     for (let i = 0; i < this.size * this.size; i++) {
         this.grid.push(new GridCell(i));
     }
-    drawGameboard(this.grid);
+    drawGameboard(this.grid, this.id);
 }
 
 Gameboard.prototype.hit = function(index) {
-    this.grid[index].hit();
+    this.grid[index].hit(this.ships);
 }
 
 Gameboard.prototype.areAllShipsSunk = function() {
-    let sunk = ships.every(ship => ship.isSunk);
+    let sunk = this.ships.every(ship => ship.isSunk);
     if(sunk) {
         console.log('all ships sunk');
     }
 }
 
-export const gameboard = new Gameboard(10);
-let ships = [];
-ships.push(new Ship(64, 4, 0, Date.now().toString()));
-ships.push(new Ship(21, 4, 1, (Date.now() + 10).toString()));
+export let gameboards = [];
+gameboards.push(new Gameboard(gameboards.length));
+gameboards[0].ships.push(new Ship(gameboards[0], 64, 4, 0, Date.now().toString()));
+gameboards[0].ships.push(new Ship(gameboards[0], 21, 4, 1, (Date.now() + 10).toString()));
