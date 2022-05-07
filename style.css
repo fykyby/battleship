@@ -47,6 +47,5 @@ body {
 .gameboards {
     display: flex;
     gap: 32px;
-    outline: 1px solid red;
-    width: 1000px;
+    width: 70vw;
 }

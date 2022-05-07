@@ -1,4 +1,3 @@
-
 export function drawGameboard(grid, id) {
     grid.forEach(cell => {
         const gameboardElement = document.querySelector(`.grid[data-id="${id}"]`);

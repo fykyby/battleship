@@ -13,10 +13,10 @@ function Ship(gameboard, startPos, size, direction, id) {
 
 Ship.prototype.create = function() {
     for (let i = 0; i < this.size; i++) {
-        if (this.direction === 0) {
+        if (this.direction === 'horizontal') {
             this.gameboard.grid[this.startPos + i].shipId = this.id;
             drawShipCell(this.gameboard.id, this.startPos + i, this.id);
-        } else {
+        } else if (this.direction === 'vertical') {
             this.gameboard.grid[this.startPos + i * 10].shipId = this.id;
             drawShipCell(this.gameboard.id, this.startPos + i * 10, this.id);
         }
@@ -78,7 +78,7 @@ export let gameboards = [];
 gameboards.push(new Gameboard(gameboards.length));
 gameboards.push(new Gameboard(gameboards.length));
 
-gameboards[0].ships.push(new Ship(gameboards[0], 64, 4, 0, 100));
-gameboards[0].ships.push(new Ship(gameboards[0], 21, 4, 1, 101));
-gameboards[1].ships.push(new Ship(gameboards[1], 1, 6, 1, 200));
-gameboards[1].ships.push(new Ship(gameboards[1], 70, 6, 0, 201));
+gameboards[0].ships.push(new Ship(gameboards[0], 64, 4, 'horizontal', gameboards[0].ships.length.toString()));
+gameboards[0].ships.push(new Ship(gameboards[0], 21, 4, 'vertical', gameboards[0].ships.length.toString()));
+gameboards[1].ships.push(new Ship(gameboards[1], 6, 3, 'vertical', gameboards[1].ships.length.toString()));
+gameboards[1].ships.push(new Ship(gameboards[1], 72, 2, 'horizontal', gameboards[1].ships.length.toString()));
