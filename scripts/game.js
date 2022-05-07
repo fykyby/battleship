@@ -104,12 +104,16 @@ export const game = (() => {
     gameboards.push(new Gameboard(gameboards.length));
     gameboards.push(new Gameboard(gameboards.length));  
     
-    const test1 = (Math.round(Math.random() * 100));
-    const test2 = (Math.round(Math.random() * 100));
-    console.log(test1);
-    console.log(test2);
-    gameboards[0].ships.push(new Ship(gameboards[0], test1, 4, 'vertical', gameboards[0].ships.length.toString()));
-    gameboards[0].ships.push(new Ship(gameboards[0], test2, 4, 'horizontal', gameboards[0].ships.length.toString()));
+    const randPos1 = (Math.round(Math.random() * 100));
+    const randLength1 = (Math.round(Math.random() * 4) + 2);
+    const randPos2 = (Math.round(Math.random() * 100));
+    const randLength2 = (Math.round(Math.random() * 4) + 2);
+    console.log(randPos1);
+    console.log(randLength1);
+    console.log(randPos2);
+    console.log(randLength2);
+    gameboards[0].ships.push(new Ship(gameboards[0], randPos1, randLength1, 'vertical', gameboards[0].ships.length.toString()));
+    gameboards[0].ships.push(new Ship(gameboards[0], randPos2, randLength2, 'horizontal', gameboards[0].ships.length.toString()));
 
     return {
         isGameOver,

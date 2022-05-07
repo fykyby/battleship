@@ -14,7 +14,7 @@ body {
 }
 
 .grid {
-    --gap: 4px;
+    --gap: 3px;
 
     display: grid;
     grid-template-columns: repeat(10, 1fr);
@@ -46,6 +46,20 @@ body {
 
 .gameboards {
     display: flex;
-    gap: 32px;
-    width: 70vw;
+    justify-content: center;
+    align-items: center;
+    gap: 2vw;
+    width: 65vw;
+    min-height: fit-content;
+}
+
+@media (max-width: 750px) {
+    .gameboards {
+        flex-direction: column;
+        width: 60vw;
+    }
+
+    .grid {
+        width: 100%;
+    }
 }
