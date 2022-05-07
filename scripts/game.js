@@ -41,9 +41,7 @@ function GridCell(index) {
 
 GridCell.prototype.hit = function() {
     if (this.isHit) return;
-
     this.isHit = true;
-
     if(this.shipId) {
         ships.find(ship => ship.id === this.shipId.toString()).hit();
     }
@@ -52,26 +50,25 @@ GridCell.prototype.hit = function() {
 function Gameboard(size) {
     this.size = size;
     this.grid = [];
-    
-    this.create = function() {
-        for (let i = 0; i < this.size * this.size; i++) {
-            this.grid.push(new GridCell(i));
-        }
-        drawGameboard(this.grid);
-    }
-    
-    this.hit = function(index) {
-        this.grid[index].hit();
-    }
-
-    this.areAllShipsSunk = function() {
-        let sunk = ships.every(ship => ship.isSunk);
-        if(sunk) {
-            console.log('all ships sunk');
-        }
-    }
-
     this.create();
+}
+
+Gameboard.prototype.create = function() {
+    for (let i = 0; i < this.size * this.size; i++) {
+        this.grid.push(new GridCell(i));
+    }
+    drawGameboard(this.grid);
+}
+
+Gameboard.prototype.hit = function(index) {
+    this.grid[index].hit();
+}
+
+Gameboard.prototype.areAllShipsSunk = function() {
+    let sunk = ships.every(ship => ship.isSunk);
+    if(sunk) {
+        console.log('all ships sunk');
+    }
 }
 
 export const gameboard = new Gameboard(10);
