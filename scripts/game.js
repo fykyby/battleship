@@ -8,7 +8,6 @@ function Ship(gameboard, startPos, size, direction, id) {
     this.hitcount = 0;
     this.isSunk = false;
     this.id = id;
-
     this.create();  
 }
 
@@ -44,7 +43,8 @@ GridCell.prototype.hit = function(ships) {
     if (this.isHit) return;
     this.isHit = true;
     if(this.shipId) {
-        ships.find(ship => ship.id === this.shipId.toString()).hit();
+        const targetShip = ships.find(ship => ship.id === this.shipId);
+        targetShip.hit();
     }
 }
 
@@ -70,12 +70,15 @@ Gameboard.prototype.hit = function(index) {
 Gameboard.prototype.areAllShipsSunk = function() {
     let sunk = this.ships.every(ship => ship.isSunk);
     if(sunk) {
-        console.log('all ships sunk');
+        console.log(`Board's ${this.id} ships sunk`);
     }
 }
 
 export let gameboards = [];
 gameboards.push(new Gameboard(gameboards.length));
 gameboards.push(new Gameboard(gameboards.length));
-// gameboards[0].ships.push(new Ship(gameboards[0], 64, 4, 0, Date.now().toString()));
-// gameboards[0].ships.push(new Ship(gameboards[0], 21, 4, 1, (Date.now() + 10).toString()));
+
+gameboards[0].ships.push(new Ship(gameboards[0], 64, 4, 0, 100));
+gameboards[0].ships.push(new Ship(gameboards[0], 21, 4, 1, 101));
+gameboards[1].ships.push(new Ship(gameboards[1], 1, 6, 1, 200));
+gameboards[1].ships.push(new Ship(gameboards[1], 70, 6, 0, 201));
