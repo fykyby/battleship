@@ -8,6 +8,7 @@ function Ship(gameboard, startPos, size, direction, id) {
     this.hitcount = 0;
     this.isSunk = false;
     this.id = id;
+    this.checkForWalls();
     this.create();  
 }
 
@@ -21,6 +22,21 @@ Ship.prototype.create = function() {
             drawShipCell(this.gameboard.id, this.startPos + i * 10, this.id);
         }
     }
+}
+
+Ship.prototype.checkForWalls = function() {
+    if (this.direction === 'horizontal') {
+        while (this.startPos.toString()[0] !== (this.startPos + this.size).toString()[0]) {
+            if ((this.startPos + this.size).toString()[1] === '0') break;
+            this.startPos = this.startPos - 1;
+        }
+    } else if (this.direction === 'vertical') {
+        while (this.startPos + (this.size - 1) * 10 > 99) {
+            let n = this.startPos.toString()[0];
+            n = parseInt(n) - 1;
+            this.startPos = parseInt(n.toString() + this.startPos.toString()[1]);
+        }
+    }   
 }
 
 Ship.prototype.hit = function() {
@@ -81,14 +97,10 @@ export const game = (() => {
     gameboards.push(new Gameboard(gameboards.length));
     gameboards.push(new Gameboard(gameboards.length));  
     
-    gameboards[0].ships.push(new Ship(gameboards[0], 64, 4, 'horizontal', gameboards[0].ships.length.toString()));
-    gameboards[0].ships.push(new Ship(gameboards[0], 21, 4, 'vertical', gameboards[0].ships.length.toString()));
-    gameboards[1].ships.push(new Ship(gameboards[1], 6, 3, 'vertical', gameboards[1].ships.length.toString()));
-    gameboards[1].ships.push(new Ship(gameboards[1], 72, 2, 'horizontal', gameboards[1].ships.length.toString()));
+    gameboards[0].ships.push(new Ship(gameboards[0], 54, 4, 'vertical', gameboards[0].ships.length.toString()));
 
     return {
         isGameOver,
         gameboards
     }
 })();
-
