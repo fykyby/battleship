@@ -14,12 +14,14 @@ body {
 }
 
 .grid {
+    --gap: 4px;
+
     display: grid;
     grid-template-columns: repeat(10, 1fr);
-    gap: 6px;
-    padding: 6px;
+    gap: var(--gap);
+    padding: var(--gap);
 
-    width: min(90vh, 90vw);
+    width: 50%;
     min-height: 100px;
 }
 
@@ -40,4 +42,11 @@ body {
 
 .grid-cell.hit-ship {
     background-color: rgb(93, 0, 0);
+}
+
+.gameboards {
+    display: flex;
+    gap: 32px;
+    outline: 1px solid red;
+    width: 1000px;
 }

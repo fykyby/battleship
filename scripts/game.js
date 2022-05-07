@@ -76,5 +76,6 @@ Gameboard.prototype.areAllShipsSunk = function() {
 
 export let gameboards = [];
 gameboards.push(new Gameboard(gameboards.length));
-gameboards[0].ships.push(new Ship(gameboards[0], 64, 4, 0, Date.now().toString()));
-gameboards[0].ships.push(new Ship(gameboards[0], 21, 4, 1, (Date.now() + 10).toString()));
+gameboards.push(new Gameboard(gameboards.length));
+// gameboards[0].ships.push(new Ship(gameboards[0], 64, 4, 0, Date.now().toString()));
+// gameboards[0].ships.push(new Ship(gameboards[0], 21, 4, 1, (Date.now() + 10).toString()));
