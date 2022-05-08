@@ -38,15 +38,19 @@ body {
 }
 
 .grid-cell.ship {
-    background-color: rgb(34, 34, 34);
+    background-color: rgb(33, 33, 33);
 }
 
 .grid-cell.hit-blank {
-    background-color: rgb(66, 66, 66);
+    background-color: rgb(8, 36, 56);
 }
 
 .grid-cell.hit-ship {
     background-color: rgb(71, 0, 0);
+}
+
+.grid-cell.hit-ship.sunk {
+    background-color: rgb(66, 66, 66);
 }
 
 .gameboards {

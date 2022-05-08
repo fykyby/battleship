@@ -1,4 +1,4 @@
-import { drawGameboard } from "./display.js";
+import { drawGameboard, showShipAsSunken } from "./display.js";
 
 function Ship(gameboard, startPos, size, direction, id) {
     this.gameboard = gameboard;
@@ -59,6 +59,7 @@ Ship.prototype.hit = function() {
 Ship.prototype.sink = function() {
     this.isSunk = true;
     this.gameboard.areAllShipsSunk();
+    showShipAsSunken(this.gameboard, this.id);
 }
 
 function GridCell(index) {
