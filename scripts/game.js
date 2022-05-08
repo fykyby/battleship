@@ -8,6 +8,7 @@ function Ship(gameboard, startPos, size, direction, id) {
     this.hitcount = 0;
     this.isSunk = false;
     this.id = id;
+    // this.randomize();
     this.checkForWalls();
     this.create();  
 }
@@ -22,6 +23,12 @@ Ship.prototype.create = function() {
             drawShipCell(this.gameboard.id, this.startPos + i * 10, this.id);
         }
     }
+}
+
+Ship.prototype.randomize = function() {
+    this.startPos = Math.round(Math.random() * 100);
+    this.size = Math.round(Math.random() * 4) + 2;
+    this.direction = Math.round(Math.random() * 2) === 0 ? 'horizontal' : 'vertical' ;
 }
 
 Ship.prototype.checkForWalls = function() {
@@ -104,13 +111,16 @@ export const game = (() => {
     gameboards.push(new Gameboard(gameboards.length));
     gameboards.push(new Gameboard(gameboards.length));  
     
-    const randPos1 = (Math.round(Math.random() * 100));
-    const randLength1 = (Math.round(Math.random() * 4) + 2);
-    const randPos2 = (Math.round(Math.random() * 100));
-    const randLength2 = (Math.round(Math.random() * 4) + 2);
-    gameboards[0].ships.push(new Ship(gameboards[0], randPos1, randLength1, 'vertical', gameboards[0].ships.length.toString()));
-    gameboards[0].ships.push(new Ship(gameboards[0], randPos2, randLength2, 'horizontal', gameboards[0].ships.length.toString()));
-
+    gameboards[0].ships.push(new Ship(gameboards[0], 1, 4, 'vertical', gameboards[0].ships.length.toString()));
+    gameboards[0].ships.push(new Ship(gameboards[0], 64, 5, 'horizontal', gameboards[0].ships.length.toString()));
+    gameboards[0].ships.push(new Ship(gameboards[0], 72, 2, 'vertical', gameboards[0].ships.length.toString()));
+    gameboards[0].ships.push(new Ship(gameboards[0], 25, 4, 'horizontal ', gameboards[0].ships.length.toString()));
+    
+    gameboards[1].ships.push(new Ship(gameboards[1], 1, 4, 'vertical', gameboards[1].ships.length.toString()));
+    gameboards[1].ships.push(new Ship(gameboards[1], 64, 5, 'horizontal', gameboards[1].ships.length.toString()));
+    gameboards[1].ships.push(new Ship(gameboards[1], 72, 2, 'vertical', gameboards[1].ships.length.toString()));
+    gameboards[1].ships.push(new Ship(gameboards[1], 25, 4, 'horizontal ', gameboards[1].ships.length.toString()));
+    
     return {
         isGameOver,
         gameboards
