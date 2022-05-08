@@ -11,6 +11,7 @@ function setCellElement(index) {
 
 export function drawGameboard(gameboard, grid) {
     setGameboardElement(gameboard);
+
     grid.forEach((cell, index) => {
         const targetCell = document.createElement('div');
         targetCell.classList.add('grid-cell');
@@ -23,12 +24,14 @@ export function drawGameboard(gameboard, grid) {
 export function showShipCells(gameboard, index) {
     setGameboardElement(gameboard);
     setCellElement(index);
+
     cellElement.classList.add('ship');
 }
 
 export function hideShipCells(gameboard, index) {
     setGameboardElement(gameboard);
     setCellElement(index);
+
     cellElement.classList.remove('ship');
 }
 
@@ -45,6 +48,7 @@ export function showHits(gameboard, index) {
 
 export function showShipAsSunken(gameboard, shipId) {
     setGameboardElement(gameboard);
+    
     gameboard.grid.forEach(cell => {
         if (cell.shipId === shipId.toString()) {
             setCellElement(cell.index);

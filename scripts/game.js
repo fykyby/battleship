@@ -13,6 +13,7 @@ function Ship(gameboard, startPos, size, direction, id) {
     this.create();  
 }
 
+// Add ship cells to grid
 Ship.prototype.create = function() {
     for (let i = 0; i < this.size; i++) {
         if (this.direction === 'horizontal') {
@@ -23,12 +24,14 @@ Ship.prototype.create = function() {
     }
 }
 
+// Randomize ship variables
 Ship.prototype.randomize = function() {
     this.startPos = Math.round(Math.random() * 100);
     this.size = Math.round(Math.random() * 4) + 2;
     this.direction = Math.round(Math.random() * 2) === 0 ? 'horizontal' : 'vertical' ;
 }
 
+// Prevent ships from going out of bounds
 Ship.prototype.checkForWalls = function() {
     if (this.direction === 'horizontal') {
         let startIndex = this.startPos;
@@ -51,14 +54,22 @@ Ship.prototype.checkForWalls = function() {
     }   
 }
 
+// Hit ship
 Ship.prototype.hit = function() {
     this.hitcount++;
+
+    // Sink if hitcount equals ship size
     if (this.hitcount === this.size) this.sink();
 }
 
+// Sink ship
 Ship.prototype.sink = function() {
     this.isSunk = true;
+
+    // Check if all ships has been sunk
     this.gameboard.areAllShipsSunk();
+
+    // Display sunk ships in different color
     showShipAsSunken(this.gameboard, this.id);
 }
 
@@ -68,9 +79,12 @@ function GridCell(index) {
     this.isHit = false;
 }
 
+// Hit cell
 GridCell.prototype.hit = function(ships) {
     this.isHit = true;
-    if(this.shipId) {
+
+    // If cell contains ship, hit it
+    if (this.shipId) {
         const targetShip = ships.find(ship => ship.id === this.shipId);
         targetShip.hit();
     }
@@ -84,6 +98,7 @@ function Gameboard(id) {
     this.create();
 }
 
+// Create and display gameboard
 Gameboard.prototype.create = function() {
     for (let i = 0; i < this.size * this.size; i++) {
         this.grid.push(new GridCell(i));
@@ -91,6 +106,7 @@ Gameboard.prototype.create = function() {
     drawGameboard(this, this.grid);
 }
 
+// Main hit function
 Gameboard.prototype.hit = function(index) {
     // If cell has already been hit or it isn't your turn - return 
     if (this.grid[index].isHit || game.getTurn() % 2 !== this.id) return;
@@ -110,9 +126,10 @@ Gameboard.prototype.hit = function(index) {
     }
 }
 
+// If every ship is sunk - end game
 Gameboard.prototype.areAllShipsSunk = function() {
     let sunk = this.ships.every(ship => ship.isSunk);
-    if(sunk) {
+    if (sunk) {
         game.isGameOver = true;
         console.log(`Board's ${this.id} ships sunk`);
     }
@@ -137,6 +154,7 @@ const enemy = (() => {
     }
 })();
 
+// Main game function
 export const game = (() => {
     let isGameOver = false;
     let turn = 1;
@@ -156,12 +174,14 @@ export const game = (() => {
     gameboards[1].ships.push(new Ship(gameboards[1], 72, 2, 'vertical', gameboards[1].ships.length.toString()));
     gameboards[1].ships.push(new Ship(gameboards[1], 25, 4, 'horizontal', gameboards[1].ships.length.toString()));
     
+    // Display player's ships
     gameboards[0].grid.forEach((cell, index) => {
         if (cell.shipId) {
             showShipCells(gameboards[0], index);
         }
     });
 
+    // Advance turn
     function nextTurn() {
         turn++;
         if (turn % 2 === 0) {
