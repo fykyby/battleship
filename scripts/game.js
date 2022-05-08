@@ -114,12 +114,12 @@ export const game = (() => {
     gameboards[0].ships.push(new Ship(gameboards[0], 1, 4, 'vertical', gameboards[0].ships.length.toString()));
     gameboards[0].ships.push(new Ship(gameboards[0], 64, 5, 'horizontal', gameboards[0].ships.length.toString()));
     gameboards[0].ships.push(new Ship(gameboards[0], 72, 2, 'vertical', gameboards[0].ships.length.toString()));
-    gameboards[0].ships.push(new Ship(gameboards[0], 25, 4, 'horizontal ', gameboards[0].ships.length.toString()));
+    gameboards[0].ships.push(new Ship(gameboards[0], 25, 4, 'horizontal', gameboards[0].ships.length.toString()));
     
     gameboards[1].ships.push(new Ship(gameboards[1], 1, 4, 'vertical', gameboards[1].ships.length.toString()));
     gameboards[1].ships.push(new Ship(gameboards[1], 64, 5, 'horizontal', gameboards[1].ships.length.toString()));
     gameboards[1].ships.push(new Ship(gameboards[1], 72, 2, 'vertical', gameboards[1].ships.length.toString()));
-    gameboards[1].ships.push(new Ship(gameboards[1], 25, 4, 'horizontal ', gameboards[1].ships.length.toString()));
+    gameboards[1].ships.push(new Ship(gameboards[1], 25, 4, 'horizontal', gameboards[1].ships.length.toString()));
     
     return {
         isGameOver,
