@@ -27,21 +27,25 @@ body {
 
 .grid-cell {
     aspect-ratio: 1;
-    background-color: rgb(98, 98, 98);
+    background-color: rgb(29, 68, 96);
     box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 1);
     cursor: pointer;
+
+    padding: 5%;
+    color: rgba(255, 255, 255, 0.1);
+    font-weight: bold;
 }
 
 .grid-cell.ship {
-    background-color: rgb(45, 45, 45);
+    background-color: rgb(34, 34, 34);
 }
 
 .grid-cell.hit-blank {
-    background-color: rgb(0, 0, 0);
+    background-color: rgb(66, 66, 66);
 }
 
 .grid-cell.hit-ship {
-    background-color: rgb(93, 0, 0);
+    background-color: rgb(71, 0, 0);
 }
 
 .gameboards {

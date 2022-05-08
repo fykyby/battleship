@@ -108,10 +108,6 @@ export const game = (() => {
     const randLength1 = (Math.round(Math.random() * 4) + 2);
     const randPos2 = (Math.round(Math.random() * 100));
     const randLength2 = (Math.round(Math.random() * 4) + 2);
-    console.log(randPos1);
-    console.log(randLength1);
-    console.log(randPos2);
-    console.log(randLength2);
     gameboards[0].ships.push(new Ship(gameboards[0], randPos1, randLength1, 'vertical', gameboards[0].ships.length.toString()));
     gameboards[0].ships.push(new Ship(gameboards[0], randPos2, randLength2, 'horizontal', gameboards[0].ships.length.toString()));
 
