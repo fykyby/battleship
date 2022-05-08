@@ -1,25 +1,44 @@
-export function drawGameboard(grid, id) {
+let gameboardElement;
+let cellElement;
+
+function setTargetGameboard(gameboard) {
+    gameboardElement = document.querySelector(`.grid[data-id="${gameboard.id}"`);
+}
+
+function setTargetCell(index) {
+    cellElement = gameboardElement.querySelector(`[data-index="${index}"]`);
+}
+
+export function drawGameboard(gameboard, grid) {
+    setTargetGameboard(gameboard);
     grid.forEach((cell, index) => {
-        const gameboardElement = document.querySelector(`.grid[data-id="${id}"]`);
-        const cellElement = document.createElement('div');
-        cellElement.classList.add('grid-cell');
-        cellElement.setAttribute('data-index', cell.index);
-        cellElement.textContent = index;
-        gameboardElement.appendChild(cellElement);
+        const targetCell = document.createElement('div');
+        targetCell.classList.add('grid-cell');
+        targetCell.setAttribute('data-index', cell.index);
+        targetCell.textContent = index;
+        gameboardElement.appendChild(targetCell);
     });
 }
 
-export function drawShipCell(boardId, index, id) {
-    const gameboardElement = document.querySelector(`.grid[data-id="${boardId}"]`);
-    const cell = gameboardElement.querySelector(`[data-index="${index}"]`);
-    cell.classList.add('ship');
-    cell.setAttribute('data-id', id);
+export function showShipCells(gameboard, index) {
+    setTargetGameboard(gameboard);
+    setTargetCell(index);
+    cellElement.classList.add('ship');
 }
 
-export function changeCellClass(cell) {
-    if (!cell.classList.contains('ship')) {
-        cell.classList.add('hit-blank');
+export function hideShipCells(gameboard, index) {
+    setTargetGameboard(gameboard);
+    setTargetCell(index);
+    cellElement.classList.remove('ship');
+}
+
+export function showHits(gameboard, index) {
+    setTargetGameboard(gameboard);
+    setTargetCell(index);
+
+    if (!gameboard.grid[index].shipId) {
+        cellElement.classList.add('hit-blank');
     } else {
-        cell.classList.add('hit-ship');
+        cellElement.classList.add('hit-ship');
     }
 }

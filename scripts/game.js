@@ -1,4 +1,4 @@
-import { drawGameboard, drawShipCell } from "./display.js";
+import { drawGameboard } from "./display.js";
 
 function Ship(gameboard, startPos, size, direction, id) {
     this.gameboard = gameboard;
@@ -17,10 +17,8 @@ Ship.prototype.create = function() {
     for (let i = 0; i < this.size; i++) {
         if (this.direction === 'horizontal') {
             this.gameboard.grid[this.startPos + i].shipId = this.id;
-            drawShipCell(this.gameboard.id, this.startPos + i, this.id);
         } else if (this.direction === 'vertical') {
             this.gameboard.grid[this.startPos + i * 10].shipId = this.id;
-            drawShipCell(this.gameboard.id, this.startPos + i * 10, this.id);
         }
     }
 }
@@ -90,7 +88,7 @@ Gameboard.prototype.create = function() {
     for (let i = 0; i < this.size * this.size; i++) {
         this.grid.push(new GridCell(i));
     }
-    drawGameboard(this.grid, this.id);
+    drawGameboard(this, this.grid);
 }
 
 Gameboard.prototype.hit = function(index) {
@@ -121,6 +119,7 @@ export const game = (() => {
     gameboards[1].ships.push(new Ship(gameboards[1], 72, 2, 'vertical', gameboards[1].ships.length.toString()));
     gameboards[1].ships.push(new Ship(gameboards[1], 25, 4, 'horizontal', gameboards[1].ships.length.toString()));
     
+    // console.log(gameboards[0]);
     return {
         isGameOver,
         gameboards
