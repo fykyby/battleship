@@ -1,18 +1,15 @@
 import { game } from "./game.js";
-import { showHits, showShipCells, hideShipCells} from "./display.js";
+import { showShipCells, hideShipCells} from "./display.js";
 
-const gameboardElement = document.querySelector('.gameboards');
+const gameboardElement = document.querySelector('.grid[data-id="1"]');
 const showShipsCheckbox = document.querySelector('#showShips');
 
 gameboardElement.addEventListener('click', (e) => {
     if (!e.target.classList.contains('grid-cell') || game.isGameOver) return;
-
+    
     const index = parseInt(e.target.getAttribute('data-index'));
     const targetGameboard = game.gameboards[e.target.parentElement.getAttribute('data-id')];
     targetGameboard.hit(index);
-
-    // changeCellClass(e.target);
-    showHits(targetGameboard, index);
 });
 
 showShipsCheckbox.addEventListener('change', () => {
@@ -22,7 +19,6 @@ showShipsCheckbox.addEventListener('change', () => {
                 showShipCells(game.gameboards[1], index);
             }
         });
-        
     } else {
         game.gameboards[1].grid.forEach((cell, index) => {
             if (cell.shipId) {

@@ -1,4 +1,4 @@
-import { drawGameboard, showShipAsSunken, showShipCells } from "./display.js";
+import { drawGameboard, showShipAsSunken, showShipCells, showHits } from "./display.js";
 
 function Ship(gameboard, startPos, size, direction, id) {
     this.gameboard = gameboard;
@@ -69,7 +69,6 @@ function GridCell(index) {
 }
 
 GridCell.prototype.hit = function(ships) {
-    if (this.isHit) return;
     this.isHit = true;
     if(this.shipId) {
         const targetShip = ships.find(ship => ship.id === this.shipId);
@@ -93,7 +92,22 @@ Gameboard.prototype.create = function() {
 }
 
 Gameboard.prototype.hit = function(index) {
+    // If cell has already been hit or it isn't your turn - return 
+    if (this.grid[index].isHit || game.getTurn() % 2 !== this.id) return;
+
+    // Hit
     this.grid[index].hit(this.ships);
+
+    // Display hits
+    showHits(this, index);
+
+    // If hit a ship, return true
+    // Else continue to next turn
+    if (this.grid[index].shipId) {
+        return true;
+    } else {
+        game.nextTurn();
+    }
 }
 
 Gameboard.prototype.areAllShipsSunk = function() {
@@ -104,9 +118,31 @@ Gameboard.prototype.areAllShipsSunk = function() {
     }
 }
 
+const enemy = (() => {
+    function attack() {
+        // Randomize target cell index
+        let target = Math.floor(Math.random() * 100);
+
+        // Randomize if target cell has already been hit
+        while (game.gameboards[0].grid[target].isHit) {
+            target = Math.floor(Math.random() * 100);
+        }
+
+        // If target was a ship, hit again
+        if (game.gameboards[0].hit(target)) attack();
+    }
+
+    return {
+        attack
+    }
+})();
+
 export const game = (() => {
     let isGameOver = false;
+    let turn = 1;
+    const getTurn = () => turn;
     let gameboards = [];
+
     gameboards.push(new Gameboard(gameboards.length));
     gameboards.push(new Gameboard(gameboards.length));  
     
@@ -125,8 +161,18 @@ export const game = (() => {
             showShipCells(gameboards[0], index);
         }
     });
+
+    function nextTurn() {
+        turn++;
+        if (turn % 2 === 0) {
+            enemy.attack();
+        }
+    }
+
     return {
         isGameOver,
-        gameboards
+        gameboards,
+        nextTurn,
+        getTurn
     }
 })();
