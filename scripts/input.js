@@ -17,22 +17,17 @@ gameboardElement.addEventListener('click', (e) => {
 
 showShipsCheckbox.addEventListener('change', () => {
     if (showShipsCheckbox.checked) {
-        // render ships
-        game.gameboards.forEach(board => {
-            board.grid.forEach((cell, index) => {
-                if (cell.shipId) {
-                    showShipCells(board, index);
-                }
-            });
+        game.gameboards[1].grid.forEach((cell, index) => {
+            if (cell.shipId) {
+                showShipCells(game.gameboards[1], index);
+            }
         });
+        
     } else {
-        // hide ships
-        game.gameboards.forEach(board => {
-            board.grid.forEach((cell, index) => {
-                if (cell.shipId) {
-                    hideShipCells(board, index);
-                }
-            });
+        game.gameboards[1].grid.forEach((cell, index) => {
+            if (cell.shipId) {
+                hideShipCells(game.gameboards[1], index);
+            }
         });
     }
 })

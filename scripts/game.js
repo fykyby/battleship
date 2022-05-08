@@ -1,4 +1,4 @@
-import { drawGameboard, showShipAsSunken } from "./display.js";
+import { drawGameboard, showShipAsSunken, showShipCells } from "./display.js";
 
 function Ship(gameboard, startPos, size, direction, id) {
     this.gameboard = gameboard;
@@ -120,7 +120,11 @@ export const game = (() => {
     gameboards[1].ships.push(new Ship(gameboards[1], 72, 2, 'vertical', gameboards[1].ships.length.toString()));
     gameboards[1].ships.push(new Ship(gameboards[1], 25, 4, 'horizontal', gameboards[1].ships.length.toString()));
     
-    // console.log(gameboards[0]);
+    gameboards[0].grid.forEach((cell, index) => {
+        if (cell.shipId) {
+            showShipCells(gameboards[0], index);
+        }
+    });
     return {
         isGameOver,
         gameboards
