@@ -116,7 +116,7 @@ body {
 }
 
 .gameOverContainer {
-    display: hide;
+    display: none;
     justify-content: center;
     align-items: center;
 
