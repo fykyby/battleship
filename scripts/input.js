@@ -12,7 +12,7 @@ gameboardElement.addEventListener('click', (e) => {
 
     const index = parseInt(e.target.getAttribute('data-index'));
     const targetGameboard = game.gameboards[e.target.parentElement.getAttribute('data-id')];
-
+    
     targetGameboard.hit(index);
 });
 

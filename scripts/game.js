@@ -205,7 +205,7 @@ Gameboard.prototype.hit = function(index) {
 
     // If hit a ship, return true
     // Else continue to next turn
-    if (this.grid[index].shipId) {
+    if (typeof this.grid[index].shipId === 'number') {
         return true;
     } else {
         game.nextTurn();

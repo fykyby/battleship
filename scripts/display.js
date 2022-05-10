@@ -39,7 +39,7 @@ export function showHits(gameboard, index) {
     setGameboardElement(gameboard);
     setCellElement(index);
 
-    if (!gameboard.grid[index].shipId) {
+    if (typeof gameboard.grid[index].shipId !== 'number') {
         cellElement.classList.add('hit-blank');
     } else {
         cellElement.classList.add('hit-ship');
