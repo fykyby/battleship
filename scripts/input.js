@@ -3,7 +3,6 @@ import { showShipCells, hideShipCells} from "./display.js";
 
 const gameboardElement = document.querySelector('.grid[data-id="1"]');
 const showShipsCheckbox = document.querySelector('#showShips');
-const addShipBtn = document.querySelector('#addShip');
 
 // Listen for clicks on gameboard
 gameboardElement.addEventListener('click', (e) => {
