@@ -12,6 +12,7 @@ body {
 
     background-color: rgb(8, 36, 56);
     height: 100vh;
+    min-width: 500px;
 
     font-family: 'Roboto', sans-serif;
 }
@@ -32,12 +33,16 @@ body {
     aspect-ratio: 1;
     background-color: rgb(29, 68, 96);
     box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 1);
-    cursor: pointer;
 
     padding: 5%;
     color: rgba(255, 255, 255, 0.1);
     font-weight: bold;
-    font-size: min(14px, 3vh);
+    font-size: 14px;
+    user-select: none;
+}
+
+.grid[data-id="1"] .grid-cell {
+    cursor: pointer;
 }
 
 .grid-cell.ship {
@@ -71,7 +76,7 @@ body {
 @media (max-width: 1200px) {
     .gameboards {
         flex-direction: column-reverse;
-        width: 50%;
+        width: 70%;
     }
 
     .grid {
