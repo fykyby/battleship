@@ -32,7 +32,7 @@ Ship.prototype.create = function() {
 
 // Randomize ship variables
 Ship.prototype.randomize = function() {
-    this.startPos = Math.round(Math.random() * 98);
+    this.startPos = Math.round(Math.random() * 99);
     this.direction = Math.round(Math.random()) === 0 ? 'horizontal' : 'vertical';
     this.checkForWalls();
 }
