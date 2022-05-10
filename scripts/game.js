@@ -243,6 +243,8 @@ Gameboard.prototype.drawShips = function() {
 }
 
 const enemy = (() => {
+    const attackDelay = 400;
+
     function attack() {
         // Randomize target cell index
         let target = Math.floor(Math.random() * 100);
@@ -253,11 +255,12 @@ const enemy = (() => {
         }
 
         // If target was a ship, hit again
-        if (game.gameboards[0].hit(target)) attack();
+        if (game.gameboards[0].hit(target)) setTimeout(attack, attackDelay);
     }
 
     return {
-        attack
+        attack,
+        attackDelay
     }
 })();
 
@@ -279,7 +282,7 @@ export const game = (() => {
     function nextTurn() {
         turn++;
         if (turn % 2 === 0) {
-            enemy.attack();
+            setTimeout(enemy.attack, enemy.attackDelay);
         }
     }
 
