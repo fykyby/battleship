@@ -44,7 +44,7 @@ body {
 
 .grid-cell {
     aspect-ratio: 1;
-    background-color: rgb(29, 68, 96);
+    background-color: rgb(25, 60, 86);
     box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 1);
 
     padding: 5%;
@@ -69,7 +69,7 @@ body {
 }
 
 .grid-cell.hit-blank {
-    background-color: rgb(8, 36, 56);
+    background-color: rgb(7, 29, 43);
 }
 
 .grid-cell.hit-ship {
