@@ -1,4 +1,4 @@
-import { showShipAsSunken } from "./display.js";
+import { showShipAsSunk } from "./display.js";
 
 export default function Ship(gameboard, id, size) {
     this.gameboard = gameboard;
@@ -139,5 +139,5 @@ Ship.prototype.sink = function() {
     this.gameboard.areAllShipsSunk();
 
     // Display sunk ships in different color
-    showShipAsSunken(this.gameboard, this.id);
+    showShipAsSunk(this.gameboard, this.id);
 }

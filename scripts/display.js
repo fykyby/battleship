@@ -46,11 +46,11 @@ export function showHits(gameboard, index) {
     }
 }
 
-export function showShipAsSunken(gameboard, shipId) {
+export function showShipAsSunk(gameboard, shipId) {
     setGameboardElement(gameboard);
     
     gameboard.grid.forEach(cell => {
-        if (cell.shipId === shipId.toString()) {
+        if (cell.shipId === shipId) {
             setCellElement(cell.index);
             cellElement.classList.add('sunk');
         }
