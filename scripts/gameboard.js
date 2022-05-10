@@ -49,7 +49,7 @@ Gameboard.prototype.areAllShipsSunk = function() {
 }
 
 Gameboard.prototype.addShips = function() {
-    let availableShips = [5, 4, 3, 3, 2];
+    let availableShips = [5, 4, 4, 3, 3, 2];
     availableShips.forEach(shipSize => {
         this.addShip(shipSize);
     });
