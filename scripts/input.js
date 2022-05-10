@@ -3,6 +3,7 @@ import { showShipCells, hideShipCells} from "./display.js";
 
 const gameboardElement = document.querySelector('.grid[data-id="1"]');
 const showShipsCheckbox = document.querySelector('#showShips');
+const addShipBtn = document.querySelector('#addShip');
 
 // Listen for clicks on gameboard
 gameboardElement.addEventListener('click', (e) => {
@@ -20,13 +21,13 @@ gameboardElement.addEventListener('click', (e) => {
 showShipsCheckbox.addEventListener('change', () => {
     if (showShipsCheckbox.checked) {
         game.gameboards[1].grid.forEach((cell, index) => {
-            if (cell.shipId) {
+            if (typeof cell.shipId === 'number') {
                 showShipCells(game.gameboards[1], index);
             }
         });
     } else {
         game.gameboards[1].grid.forEach((cell, index) => {
-            if (cell.shipId) {
+            if (typeof cell.shipId === 'number') {
                 hideShipCells(game.gameboards[1], index);
             }
         });

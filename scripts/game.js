@@ -1,16 +1,22 @@
 import { drawGameboard, showShipAsSunken, showShipCells, showHits } from "./display.js";
 
-function Ship(gameboard, startPos, size, direction, id) {
+function Ship(gameboard, id, size) {
     this.gameboard = gameboard;
-    this.startPos = startPos;
     this.size = size;
-    this.direction = direction;
+    this.startPos;
+    this.direction;
     this.hitcount = 0;
     this.isSunk = false;
     this.id = id;
-    // this.randomize();
-    this.checkForWalls();
-    this.create();  
+    this.initialize();
+}
+
+// Run initial functions
+Ship.prototype.initialize = function() {
+    do {
+        this.randomize();
+    } while (this.checkForCollisions());
+    this.create();
 }
 
 // Add ship cells to grid
@@ -27,8 +33,72 @@ Ship.prototype.create = function() {
 // Randomize ship variables
 Ship.prototype.randomize = function() {
     this.startPos = Math.round(Math.random() * 100);
-    this.size = Math.round(Math.random() * 4) + 2;
-    this.direction = Math.round(Math.random() * 2) === 0 ? 'horizontal' : 'vertical' ;
+    this.direction = Math.round(Math.random()) === 0 ? 'horizontal' : 'vertical';
+    this.checkForWalls();
+}
+
+// Check if ship would be placed next to another
+Ship.prototype.checkForCollisions = function() {
+    let collisionCells = [];
+    const grid = this.gameboard.grid;
+
+    if (this.direction === 'horizontal') {
+        for (let i = 0; i < this.size; i++) {
+            const index = this.startPos + i;
+            console.log(index);
+            const wallOnTop = grid[index].getCoordinate('y') === 0;
+            const wallOnBottom = grid[index].getCoordinate('y') === 9;
+
+            // Add ship cell
+            collisionCells.push(grid[index]);
+
+            // Add top and bottom if not out of bounds
+            if (!wallOnTop) collisionCells.push(grid[index - 10]);
+            if (!wallOnBottom) collisionCells.push(grid[index + 10]);
+            
+            // Add left and right if not out of bounds
+            if (i === 0 && grid[index].getCoordinate('x') > 0) {
+                collisionCells.push(grid[index - 1]);
+                if (!wallOnTop) collisionCells.push(grid[index - 11]);
+                if (!wallOnBottom) collisionCells.push(grid[index + 9]);
+            } else if (i === this.size - 1 && grid[index].getCoordinate('x') < 9) {
+                collisionCells.push(grid[index + 1]);
+                if (!wallOnTop) collisionCells.push(grid[index - 9]);
+                if (!wallOnBottom) collisionCells.push(grid[index + 11]);
+            }
+        }
+    } else if (this.direction === 'vertical') {
+        for (let i = 0; i < this.size; i++) {
+            const index = this.startPos + i * 10;
+            const wallOnLeft = grid[index].getCoordinate('x') === 0;
+            const wallOnRight = grid[index].getCoordinate('x') === 9;
+            
+            // Add ship cell
+            collisionCells.push(grid[index]);
+
+            // Add left and right if not out of bouds
+            if (grid[index].getCoordinate('x') > 0) collisionCells.push(grid[index - 1]);
+            if (grid[index].getCoordinate('x') < 9) collisionCells.push(grid[index + 1]);
+
+            // Add top and bottom if not out of bounds
+            if (i === 0 && grid[index].getCoordinate('y') > 0) {
+                collisionCells.push(grid[index - 10]);
+                if (!wallOnLeft) collisionCells.push(grid[index - 11]);
+                if (!wallOnRight) collisionCells.push(grid[index - 9]);
+            } else if (i === this.size - 1 && grid[index].getCoordinate('y') < 9) {
+                collisionCells.push(grid[index + 10]);
+                if (!wallOnLeft) collisionCells.push(grid[index + 9]);
+                if (!wallOnRight) collisionCells.push(grid[index + 11]);
+            }
+        }
+    }
+
+    for (let cell of collisionCells) {
+        if (typeof cell.shipId === 'number') {
+            return true;
+        }
+    }
+    return false;
 }
 
 // Prevent ships from going out of bounds
@@ -40,7 +110,7 @@ Ship.prototype.checkForWalls = function() {
         if (endIndex < 10) endIndex = '0' + endIndex.toString();
 
         while (startIndex.toString()[0] !== endIndex.toString()[0]) {
-            if (endIndex.toString()[1] === '0' && endIndex < 101) break;
+            if (endIndex.toString()[1] === '0' && endIndex < 100) break;
             this.startPos = startIndex - 1;
             startIndex = this.startPos;
             endIndex = this.startPos + this.size;
@@ -51,7 +121,7 @@ Ship.prototype.checkForWalls = function() {
             temp = parseInt(temp) - 1;
             this.startPos = parseInt(temp.toString() + this.startPos.toString()[1]);
         }
-    }   
+    }
 }
 
 // Hit ship
@@ -84,9 +154,26 @@ GridCell.prototype.hit = function(ships) {
     this.isHit = true;
 
     // If cell contains ship, hit it
-    if (this.shipId) {
+    if (typeof this.shipId === 'number') {
         const targetShip = ships.find(ship => ship.id === this.shipId);
         targetShip.hit();
+    }
+}
+
+GridCell.prototype.getCoordinate = function(axis) {
+    let indexStr;
+    if (this.index < 10) {
+        indexStr = '0' + this.index.toString();
+    } else {
+        indexStr = this.index.toString();
+    } 
+
+    if (axis === 'x') {
+        return parseInt(indexStr[1]);
+    } else if (axis === 'y') {
+        return parseInt(indexStr[0]);
+    } else {
+        return null;
     }
 }
 
@@ -135,6 +222,27 @@ Gameboard.prototype.areAllShipsSunk = function() {
     }
 }
 
+Gameboard.prototype.addShips = function() {
+    let availableShips = [5, 4, 3, 3, 2];
+    availableShips.forEach(shipSize => {
+        this.addShip(shipSize);
+    });
+}
+
+// Add ship to this gameboard
+Gameboard.prototype.addShip = function(size) {
+    this.ships.push(new Ship(this, this.ships.length, size));
+}
+
+// Draw ships on this gameboard
+Gameboard.prototype.drawShips = function() {
+    this.grid.forEach((cell, index) => {
+        if (typeof cell.shipId === "number") {
+            showShipCells(this, index);
+        }
+    });
+}
+
 const enemy = (() => {
     function attack() {
         // Randomize target cell index
@@ -162,25 +270,12 @@ export const game = (() => {
     let gameboards = [];
 
     gameboards.push(new Gameboard(gameboards.length));
-    gameboards.push(new Gameboard(gameboards.length));  
-    
-    gameboards[0].ships.push(new Ship(gameboards[0], 1, 4, 'vertical', gameboards[0].ships.length.toString()));
-    gameboards[0].ships.push(new Ship(gameboards[0], 64, 5, 'horizontal', gameboards[0].ships.length.toString()));
-    gameboards[0].ships.push(new Ship(gameboards[0], 72, 2, 'vertical', gameboards[0].ships.length.toString()));
-    gameboards[0].ships.push(new Ship(gameboards[0], 25, 4, 'horizontal', gameboards[0].ships.length.toString()));
-    
-    gameboards[1].ships.push(new Ship(gameboards[1], 1, 4, 'vertical', gameboards[1].ships.length.toString()));
-    gameboards[1].ships.push(new Ship(gameboards[1], 64, 5, 'horizontal', gameboards[1].ships.length.toString()));
-    gameboards[1].ships.push(new Ship(gameboards[1], 72, 2, 'vertical', gameboards[1].ships.length.toString()));
-    gameboards[1].ships.push(new Ship(gameboards[1], 25, 4, 'horizontal', gameboards[1].ships.length.toString()));
-    
-    // Display player's ships
-    gameboards[0].grid.forEach((cell, index) => {
-        if (cell.shipId) {
-            showShipCells(gameboards[0], index);
-        }
-    });
+    gameboards.push(new Gameboard(gameboards.length));
 
+    gameboards[0].addShips();
+    gameboards[0].drawShips();
+    gameboards[1].addShips();
+    
     // Advance turn
     function nextTurn() {
         turn++;
