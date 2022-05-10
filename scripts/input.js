@@ -14,28 +14,3 @@ gameboardElement.addEventListener('click', (e) => {
     
     targetGameboard.hit(index);
 });
-
-// TEMPORARY
-// Show or hide enemy ships on checkbox change
-showShipsCheckbox.addEventListener('change', () => {
-    if (showShipsCheckbox.checked) {
-        game.gameboards[1].grid.forEach((cell, index) => {
-            if (typeof cell.shipId === 'number') {
-                showShipCells(game.gameboards[1], index);
-            }
-        });
-    } else {
-        game.gameboards[1].grid.forEach((cell, index) => {
-            if (typeof cell.shipId === 'number') {
-                hideShipCells(game.gameboards[1], index);
-            }
-        });
-    }
-});
-if (showShipsCheckbox.checked) {
-    game.gameboards[1].grid.forEach((cell, index) => {
-        if (typeof cell.shipId === 'number') {
-            showShipCells(game.gameboards[1], index);
-        }
-    });
-}
