@@ -1,7 +1,7 @@
 import { game } from "./game.js";
 
 export const enemy = (() => {
-    const attackDelay = 700;
+    const attackDelay = 500;
 
     function attack() {
         // Randomize target cell index
