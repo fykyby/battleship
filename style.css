@@ -9,12 +9,25 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 20px;
 
     background-color: rgb(8, 36, 56);
     height: 100vh;
     min-width: 500px;
 
     font-family: 'Roboto', sans-serif;
+}
+
+.header {
+    width: 100%;
+    min-height: 80px;
+    line-height: 80px;
+    background-color: rgb(7, 29, 43);
+    box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 1);
+    
+    text-align: center;
+    font-size: 50px;
+    color: white;
 }
 
 .grid {
@@ -39,10 +52,16 @@ body {
     font-weight: bold;
     font-size: 14px;
     user-select: none;
+
+    transition: transform 50ms ease-in-out;
 }
 
 .grid[data-id="1"] .grid-cell {
     cursor: pointer;
+}
+
+.grid[data-id="1"] .grid-cell:hover {
+    transform: scale(1.03);
 }
 
 .grid-cell.ship {
