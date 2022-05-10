@@ -1,16 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
 * {
     margin: 0;
+    box-sizing: border-box;
 }
 
 body {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
 
-    background-color: rgb(66, 66, 66);
+    background-color: rgb(8, 36, 56);
     height: 100vh;
+
+    font-family: 'Roboto', sans-serif;
 }
 
 .grid {
@@ -34,7 +37,7 @@ body {
     padding: 5%;
     color: rgba(255, 255, 255, 0.1);
     font-weight: bold;
-    font-size: 2vh;
+    font-size: min(14px, 3vh);
 }
 
 .grid-cell.ship {
@@ -58,14 +61,17 @@ body {
     justify-content: center;
     align-items: center;
     gap: 2vw;
-    width: 65vw;
+
+    width: 1200px;
     min-height: fit-content;
+    margin-top: auto;
+    margin-bottom: auto;
 }
 
-@media (max-width: 750px) {
+@media (max-width: 1200px) {
     .gameboards {
-        flex-direction: column;
-        width: 60vw;
+        flex-direction: column-reverse;
+        width: 50%;
     }
 
     .grid {
