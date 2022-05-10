@@ -32,7 +32,7 @@ Ship.prototype.create = function() {
 
 // Randomize ship variables
 Ship.prototype.randomize = function() {
-    this.startPos = Math.round(Math.random() * 100);
+    this.startPos = Math.round(Math.random() * 98);
     this.direction = Math.round(Math.random()) === 0 ? 'horizontal' : 'vertical';
     this.checkForWalls();
 }
@@ -45,7 +45,6 @@ Ship.prototype.checkForCollisions = function() {
     if (this.direction === 'horizontal') {
         for (let i = 0; i < this.size; i++) {
             const index = this.startPos + i;
-            console.log(index);
             const wallOnTop = grid[index].getCoordinate('y') === 0;
             const wallOnBottom = grid[index].getCoordinate('y') === 9;
 
