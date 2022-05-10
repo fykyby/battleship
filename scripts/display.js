@@ -64,3 +64,13 @@ export function showShipAsSunk(gameboard, shipId) {
         }
     })
 }
+
+export function showGameOverScreen() {
+    const gameOverElement = document.querySelector('.gameOverContainer');
+    gameOverElement.style.display = 'flex';
+}
+
+export function hideGameOverScreen() {
+    const gameOverElement = document.querySelector('.gameOverContainer');
+    gameOverElement.style.display = 'none';
+}

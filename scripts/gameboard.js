@@ -1,4 +1,4 @@
-import { drawGameboard, showShipCells, showHits } from "./display.js";
+import { drawGameboard, showShipCells, showHits, showGameOverScreen } from "./display.js";
 import { game } from "./game.js";
 import GridCell from "./gridcell.js";
 import Ship from "./ship.js";
@@ -44,7 +44,7 @@ Gameboard.prototype.areAllShipsSunk = function() {
     let sunk = this.ships.every(ship => ship.isSunk);
     if (sunk) {
         game.isGameOver = true;
-        console.log(`Board's ${this.id} ships sunk`);
+        showGameOverScreen();
     }
 }
 
