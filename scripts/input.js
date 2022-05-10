@@ -1,8 +1,7 @@
 import { game } from "./game.js";
-import { showShipCells, hideShipCells} from "./display.js";
 
 const gameboardElement = document.querySelector('.grid[data-id="1"]');
-const showShipsCheckbox = document.querySelector('#showShips');
+const newGameBtn = document.querySelector('button#reset');
 
 // Listen for clicks on gameboard
 gameboardElement.addEventListener('click', (e) => {
@@ -13,4 +12,8 @@ gameboardElement.addEventListener('click', (e) => {
     const targetGameboard = game.gameboards[e.target.parentElement.getAttribute('data-id')];
     
     targetGameboard.hit(index);
+});
+
+newGameBtn.addEventListener('click', () => {
+    game.startNewGame();
 });

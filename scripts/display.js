@@ -9,6 +9,14 @@ function setCellElement(index) {
     cellElement = gameboardElement.querySelector(`[data-index="${index}"]`);
 }
 
+export function deleteGameboards() {
+    const firstGrid = document.querySelector('.grid[data-id="0"');
+    while (firstGrid.firstChild) firstGrid.firstChild.remove();
+
+    const secondGrid = document.querySelector('.grid[data-id="1"');
+    while (secondGrid.firstChild) secondGrid.firstChild.remove();
+}
+
 export function drawGameboard(gameboard, grid) {
     setGameboardElement(gameboard);
 

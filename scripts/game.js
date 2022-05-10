@@ -1,5 +1,6 @@
 import Gameboard from "./gameboard.js";
 import { enemy } from "./enemy.js";
+import { deleteGameboards } from "./display.js";
 
 // Main game function
 export const game = (() => {
@@ -8,12 +9,7 @@ export const game = (() => {
     const getTurn = () => turn;
     let gameboards = [];
 
-    gameboards.push(new Gameboard(gameboards.length));
-    gameboards.push(new Gameboard(gameboards.length));
-
-    gameboards[0].addShips();
-    gameboards[0].drawShips();
-    gameboards[1].addShips();
+    startNewGame();
     
     // Advance turn
     function nextTurn() {
@@ -23,10 +19,25 @@ export const game = (() => {
         }
     }
 
+    function startNewGame() {
+        isGameOver = false;
+        turn = 1;
+        gameboards = [];
+        deleteGameboards();
+
+        gameboards.push(new Gameboard(gameboards.length));
+        gameboards.push(new Gameboard(gameboards.length));
+
+        gameboards[0].addShips();
+        gameboards[0].drawShips();
+        gameboards[1].addShips();
+    }
+
     return {
         isGameOver,
         gameboards,
         nextTurn,
-        getTurn
+        getTurn,
+        startNewGame
     }
 })();
